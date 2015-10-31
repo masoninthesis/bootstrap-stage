@@ -9,14 +9,14 @@ var concat       = require('gulp-concat')
 var uglify       = require('gulp-uglify')
 var connect      = require('gulp-connect')
 var open         = require('gulp-open')
-var imagemin     = require('gulp-imagemin')
-var pngquant     = require('imagemin-pngquant')
+// var imagemin     = require('gulp-imagemin')
+// var pngquant     = require('imagemin-pngquant')
 
 var Paths = {
   HERE                 : './',
   DIST                 : 'dist',
-  IMG                  : 'dist/img/',
-  SVG                  : 'dist/svg/',
+  // IMG                  : 'dist/img/',
+  // SVG                  : 'dist/svg/',
   DIST_TOOLKIT_JS      : 'dist/toolkit.js',
   LESS_TOOLKIT_SOURCES : './less/toolkit*',
   LESS                 : './less/**/**',
@@ -94,14 +94,22 @@ gulp.task('js-min', ['js'], function () {
     .pipe(gulp.dest(Paths.DIST))
 })
 
-gulp.task('pro', ['less-min', 'js-min', 'img-cmp', 'svgo'])
+gulp.task('pro', ['html-dist'])
 
-gulp.task('img-cmp', function () {
-  return gulp.src(Paths.LESS_TOOLKIT_SOURCES)
-    .pipe(gulp.dest(Paths.IMG))
+gulp.task('html-dist', function () {
+  return gulp.src('docs/minimal/*')
+    .pipe(gulp.dest(Paths.HERE))
 })
 
-gulp.task('svgo', function () {
-  return gulp.src(Paths.LESS_TOOLKIT_SOURCES)
-    .pipe(gulp.dest(Paths.SVG))
-})
+// gulp.task('pro', ['less-min', 'js-min', 'img-cmp', 'svgo'])
+
+// gulp.task('img-cmp', function () {
+//   return gulp.src('docs/assets/img/*')
+//     .pipe(imagemin())
+//     .pipe(gulp.dest(Paths.IMG))
+// })
+//
+// gulp.task('svgo', function () {
+//   return gulp.src(Paths.LESS_TOOLKIT_SOURCES)
+//     .pipe(gulp.dest(Paths.SVG))
+// })
