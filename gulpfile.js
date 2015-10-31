@@ -15,7 +15,7 @@ var open         = require('gulp-open')
 var Paths = {
   HERE                 : './',
   DIST                 : 'dist',
-  // IMG                  : 'dist/img/',
+  IMG                  : 'dist/img/',
   // SVG                  : 'dist/svg/',
   DIST_TOOLKIT_JS      : 'dist/toolkit.js',
   LESS_TOOLKIT_SOURCES : './less/toolkit*',
@@ -94,20 +94,19 @@ gulp.task('js-min', ['js'], function () {
     .pipe(gulp.dest(Paths.DIST))
 })
 
-gulp.task('pro', ['html-dist'])
+gulp.task('pro', ['html-dist', 'img-cmp'])
 
 gulp.task('html-dist', function () {
   return gulp.src('docs/minimal/*')
     .pipe(gulp.dest(Paths.HERE))
 })
 
-// gulp.task('pro', ['less-min', 'js-min', 'img-cmp', 'svgo'])
+gulp.task('img-cmp', function () {
+  return gulp.src('docs/assets/img/*')
+    .pipe(gulp.dest(Paths.IMG))
+})
 
-// gulp.task('img-cmp', function () {
-//   return gulp.src('docs/assets/img/*')
-//     .pipe(imagemin())
-//     .pipe(gulp.dest(Paths.IMG))
-// })
+// gulp.task('pro', ['less-min', 'js-min', 'img-cmp', 'svgo'])
 //
 // gulp.task('svgo', function () {
 //   return gulp.src(Paths.LESS_TOOLKIT_SOURCES)
