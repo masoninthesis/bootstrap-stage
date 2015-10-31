@@ -9,6 +9,7 @@ var concat       = require('gulp-concat')
 var uglify       = require('gulp-uglify')
 var connect      = require('gulp-connect')
 var open         = require('gulp-open')
+var htmlreplace  = require('gulp-html-replace')
 // var imagemin     = require('gulp-imagemin')
 // var pngquant     = require('imagemin-pngquant')
 
@@ -94,18 +95,39 @@ gulp.task('js-min', ['js'], function () {
     .pipe(gulp.dest(Paths.DIST))
 })
 
-gulp.task('pro', ['html-dist', 'img-cmp'])
+/////////////////////////////////////////////
+// My custom stuff for the minimal theme only
+/////////////////////////////////////////////
+// Before Deployment to Production (and possibly staging)
 
-gulp.task('html-dist', function () {
-  return gulp.src('docs/minimal/*')
-    .pipe(gulp.dest(Paths.HERE))
-})
+gulp.task('pro', ['img-cmp', 'html-repath', 'html-dist'])
 
+// Relocates images
 gulp.task('img-cmp', function () {
   return gulp.src('docs/assets/img/*')
     .pipe(gulp.dest(Paths.IMG))
 })
 
+// This replaces the file paths
+// You can configure the images to save time
+gulp.task('html-repath', function() {
+  gulp.src('docs/minimal/index.html')
+    .pipe(htmlreplace({
+        'css': 'dist/toolkit-minimal.min.css',
+        //'img1': 'dist/img/iphone-to-iphone-sized.jpg',
+        //'img2': 'dist/img/avatar-mdo.png',
+        //'img3': 'dist/img/iphone-perspective-sized.jpg',
+        //'img4': 'dist/img/iphone-flat-sized.jpg',
+        //'img5': 'dist/img/iphone-reverse-perspective-sized.jpg',
+        'js': 'dist/toolkit.min.js'
+    }))
+    .pipe(gulp.dest('dist/'));
+})
+// This relocates the index
+gulp.task('html-dist', function () {
+  return gulp.src('docs/minimal/*')
+    .pipe(gulp.dest(Paths.HERE))
+})
 // gulp.task('pro', ['less-min', 'js-min', 'img-cmp', 'svgo'])
 //
 // gulp.task('svgo', function () {
