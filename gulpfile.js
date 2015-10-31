@@ -100,7 +100,7 @@ gulp.task('js-min', ['js'], function () {
 /////////////////////////////////////////////
 // Before Deployment to Production (and possibly staging)
 
-gulp.task('pro', ['img-cmp', 'html-repath', 'html-dist'])
+gulp.task('pro', ['img-cmp', 'html-repath'])
 
 // Relocates images
 gulp.task('img-cmp', function () {
@@ -114,20 +114,15 @@ gulp.task('html-repath', function() {
   gulp.src('docs/minimal/index.html')
     .pipe(htmlreplace({
         'css': 'dist/toolkit-minimal.min.css',
-        //'img1': 'dist/img/iphone-to-iphone-sized.jpg',
-        //'img2': 'dist/img/avatar-mdo.png',
-        //'img3': 'dist/img/iphone-perspective-sized.jpg',
-        //'img4': 'dist/img/iphone-flat-sized.jpg',
-        //'img5': 'dist/img/iphone-reverse-perspective-sized.jpg',
         'js': 'dist/toolkit.min.js'
     }))
-    .pipe(gulp.dest('dist/'));
+    .pipe(gulp.dest(Paths.HERE));
 })
 // This relocates the index
-gulp.task('html-dist', function () {
-  return gulp.src('docs/minimal/*')
-    .pipe(gulp.dest(Paths.HERE))
-})
+// gulp.task('html-dist', function () {
+//   return gulp.src('docs/minimal/*')
+//     .pipe(gulp.dest(Paths.HERE))
+// })
 // gulp.task('pro', ['less-min', 'js-min', 'img-cmp', 'svgo'])
 //
 // gulp.task('svgo', function () {
